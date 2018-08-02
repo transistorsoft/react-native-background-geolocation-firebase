@@ -1,0 +1,49 @@
+{
+  "name": "react-native-background-geolocation-firebase",
+  "version": "0.0.1",
+  "description": "Firebase Proxy for react-native-background-geolocation",  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/transistorsoft/react-native-background-geolocation-firebase.git"
+  },
+  "keywords": [
+    "react-native",
+    "react-component",
+    "ios",
+    "android",
+    "background",
+    "geolocation",
+    "tracking",
+    "geofence",
+    "geofencing"
+  ],
+  "author": "Chris Scott <chris@transistorsoft.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/transistorsoft/react-native-background-geolocation-firebase/issues"
+  },
+  "rnpm": {
+    "commands": {
+      "postlink": "node_modules/react-native-background-geolocation/scripts/postlink.js",
+      "postunlink": "node_modules/react-native-background-geolocation/scripts/postunlink.js"
+    },
+    "ios": {
+      "sharedLibraries": [
+        "libsqlite3",
+        "libz"
+      ]
+    }
+  },
+  "homepage": "https://www.transistorsoft.com/shop/products/react-native-background-geolocation",
+  "peerDependencies": {
+    "react-native": ">=0.36.0"
+  },
+  "dependencies": {
+    "fast-plist": "^0.1.2",
+    "plist": "^2.0.1",
+    "xcode": "^0.9.1"
+  }
+}

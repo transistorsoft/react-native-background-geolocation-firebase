@@ -1,0 +1,70 @@
+apply plugin: 'com.android.library'
+
+def DEFAULT_COMPILE_SDK_VERSION     = 26
+def DEFAULT_BUILD_TOOLS_VERSION     = "26.0.2"
+def DEFAULT_TARGET_SDK_VERSION      = 26
+def DEFAULT_FIREBASE_CORE_VERSION    = "16.0.1"
+def DEFAULT_FIREBASE_FIRESTORE_VERSION = "17.0.4"
+
+android {
+    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
+    buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
+
+    defaultConfig {
+        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
+        versionCode 1
+        versionName "1.0"
+    }
+}
+
+rootProject.gradle.buildFinished { buildResult ->
+    if (buildResult.getFailure() != null) {
+        try {
+            String message = buildResult.getFailure().properties.get("reportableCauses").toString()
+
+            if (message.contains("com.android.builder.dexing.DexArchiveMergerException")) {
+
+                logger.log(LogLevel.ERROR, "")
+                logger.log(LogLevel.ERROR, " ----------------------------------------------------------- ")
+                logger.log(LogLevel.ERROR, "|         react-native-background-geolocation-firebase     | ")
+                logger.log(LogLevel.ERROR, " ----------------------------------------------------------- ")
+                logger.log(LogLevel.ERROR, "|                                                          | ")
+                logger.log(LogLevel.ERROR, "| In your app/build.gradle, enable multidex:               | ")
+                logger.log(LogLevel.ERROR, "|                                                          | ")
+                logger.log(LogLevel.ERROR, "| android {                                                | ")
+                logger.log(LogLevel.ERROR, "|    defaultConfig {                                       | ")
+                logger.log(LogLevel.ERROR, "|        multiDexEnabled true  // <-- Add this             | ")
+                logger.log(LogLevel.ERROR, "|    }                                                     | ")
+                logger.log(LogLevel.ERROR, "| }                                                        | ")
+                logger.log(LogLevel.ERROR, " ----------------------------------------------------------- ")
+
+            }
+        } catch (Exception exception) {
+
+        }
+    }
+}
+
+repositories{
+    jcenter()
+    maven {
+        url './libs'
+    }
+    maven {
+        url 'https://maven.google.com'
+    }
+}
+
+dependencies {
+    def firebaseCoreVersion = rootProject.hasProperty('firebaseCoreVersion') ? rootProject.firebaseCoreVersion : DEFAULT_FIREBASE_CORE_VERSION
+    def firebaseFirestoreVersion = rootProject.hasProperty('firebaseFirestoreVersion') ? rootProject.firebaseFirestoreVersion : DEFAULT_FIREBASE_FIRESTORE_VERSION
+
+    compile 'com.facebook.react:react-native:+'
+    compile 'org.greenrobot:eventbus:3.0.0'
+    compile "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    compile "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
+    compile(group: 'com.transistorsoft', name:'tslocationmanager', version: '+')
+    compile(group: 'com.transistorsoft', name:'tsfirebaseproxy', version: '+')
+    compile 'org.slf4j:slf4j-api:1.7.21'
+    compile 'com.github.tony19:logback-android:1.1.1-9'    
+}
