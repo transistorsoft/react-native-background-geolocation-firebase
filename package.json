@@ -25,18 +25,6 @@
   "bugs": {
     "url": "https://github.com/transistorsoft/react-native-background-geolocation-firebase/issues"
   },
-  "rnpm": {
-    "commands": {
-      "postlink": "node_modules/react-native-background-geolocation/scripts/postlink.js",
-      "postunlink": "node_modules/react-native-background-geolocation/scripts/postunlink.js"
-    },
-    "ios": {
-      "sharedLibraries": [
-        "libsqlite3",
-        "libz"
-      ]
-    }
-  },
   "homepage": "https://www.transistorsoft.com/shop/products/react-native-background-geolocation",
   "peerDependencies": {
     "react-native": ">=0.36.0"
