@@ -5,7 +5,8 @@ import {
   NativeModules
 } from "react-native"
 
-const { RNBackgroundGeolocationFirebase } = NativeModules;
+const { RNBackgroundGeolocationFirebase, RNBackgroundGeolocation } = NativeModules;
+
 const EventEmitter = new NativeEventEmitter(RNBackgroundGeolocationFirebase);
 
 const TAG               = "TSLocationManager";
@@ -28,7 +29,10 @@ export default class NativeModule {
     return new Promise((resolve, reject) => {
       let success = (state) => { resolve(state) }
       let failure = (error) => { reject(error) }
+      
       RNBackgroundGeolocationFirebase.configure(config, success, failure);
+      RNBackgroundGeolocation.registerPlugin('firebaseproxy');
     });
   }
+  
 }

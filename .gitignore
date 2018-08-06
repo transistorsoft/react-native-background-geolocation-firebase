@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/**/*
+package-lock.json
 
 # Xcode
 #
@@ -29,4 +30,13 @@ DerivedData
 #Pods/
 npm-debug.log
 
+node_modules/**/*
+
+.idea
 android/.idea
+android/.gradle
+android/build
+
+android/local.properties
+android/*.iml
+

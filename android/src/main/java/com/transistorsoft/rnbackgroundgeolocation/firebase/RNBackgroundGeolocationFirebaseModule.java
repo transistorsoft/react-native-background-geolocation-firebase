@@ -14,11 +14,14 @@ import com.transistorsoft.tsfirebaseproxy.TSFirebaseProxy;
 public class RNBackgroundGeolocationFirebaseModule extends ReactContextBaseJavaModule {
 
     private static final String TAG = "TSLocationManager";
+
+    private boolean isRegistered;
     
     public RNBackgroundGeolocationFirebaseModule(ReactApplicationContext reactContext) {
-        super(reactContext);        
+        super(reactContext);
+        isRegistered = false;
     }
-
+    
     @Override
     public void initialize() {
         // do nothing
@@ -38,8 +41,10 @@ public class RNBackgroundGeolocationFirebaseModule extends ReactContextBaseJavaM
         if (params.hasKey("geofencesCollection")) {
             proxy.setGeofencesCollection(params.getString("geofencesCollection"));
         }
-        proxy.register(getReactApplicationContext());
-
+        if (!isRegistered) {
+            isRegistered = true;
+            proxy.register(getReactApplicationContext());
+        }
         success.invoke();
     }
 }
