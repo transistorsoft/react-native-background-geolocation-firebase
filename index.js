@@ -19,7 +19,7 @@ class BackgroundGeolocationFirebase {
     } else {
       NativeModule.configure(config).then(success).catch(failure);
     }
-  }
+  }  
 }
 
 export default BackgroundGeolocationFirebase;

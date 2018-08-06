@@ -1,7 +1,7 @@
 {
   "name": "react-native-background-geolocation-firebase",
   "version": "0.0.1",
-  "description": "Firebase Proxy for react-native-background-geolocation",  
+  "description": "Firebase Proxy for react-native-background-geolocation",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -40,10 +40,9 @@
   "homepage": "https://www.transistorsoft.com/shop/products/react-native-background-geolocation",
   "peerDependencies": {
     "react-native": ">=0.36.0"
-  },
-  "dependencies": {
-    "fast-plist": "^0.1.2",
-    "plist": "^2.0.1",
-    "xcode": "^0.9.1"
+  },  
+  "devDependencies": {
+    "react": "16.4.1",
+    "react-native": "0.56.0"
   }
 }
