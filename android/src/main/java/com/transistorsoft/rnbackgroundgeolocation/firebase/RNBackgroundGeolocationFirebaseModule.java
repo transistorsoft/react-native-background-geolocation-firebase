@@ -41,6 +41,11 @@ public class RNBackgroundGeolocationFirebaseModule extends ReactContextBaseJavaM
         if (params.hasKey("geofencesCollection")) {
             proxy.setGeofencesCollection(params.getString("geofencesCollection"));
         }
+        if (params.hasKey("updateSingleDocument")) {
+            proxy.setUpdateSingleDocument(params.getBoolean("updateSingleDocument"));
+        }
+        proxy.save(getReactApplicationContext());
+
         if (!isRegistered) {
             isRegistered = true;
             proxy.register(getReactApplicationContext());
