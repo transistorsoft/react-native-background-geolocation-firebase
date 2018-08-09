@@ -22,9 +22,8 @@ rootProject.gradle.buildFinished { buildResult ->
     if (buildResult.getFailure() != null) {
         try {
             String message = buildResult.getFailure().properties.get("reportableCauses").toString()
-
-            if (message.contains("com.android.builder.dexing.DexArchiveMergerException")) {
-
+            
+            if (message.contains("DexArchiveMergerException") || message.contains("DexIndexOverflowException")) {
                 logger.log(LogLevel.ERROR, "")
                 logger.log(LogLevel.ERROR, " ----------------------------------------------------------- ")
                 logger.log(LogLevel.ERROR, "|         react-native-background-geolocation-firebase     | ")
