@@ -12,6 +12,13 @@ RNPM does a nice job, but we need to do a bit of manual setup.
 ### :open_file_folder: **`android/build.gradle`**
 
 ```diff
+buildscript {
+    dependencies {
+        classpath 'com.android.tools.build:gradle:2.3.3'
++        // NOTE:  If you've installed react-native-firebase, you should already have this included.
++        classpath 'com.google.gms:google-services:4.0.1'        
+    }
+}
 allprojects {
     repositories {
         mavenLocal()
@@ -58,6 +65,33 @@ allprojects {
 +    googlePlayServicesVersion = "15.0.1" 
 +}
 ```
+
+### :open_file_folder: **`android/app/build.gradle`**
+
+```diff
+
+dependencies {
+    .
+    .
+    .
+}
+
+// Run this once to be able to run the application with BUCK
+// puts all compile dependencies into folder libs for BUCK to use
+task copyDownloadableDepsToLibs(type: Copy) {
+    from configurations.compile
+    into 'libs'
+}
+
++ // NOTE:  If you've installed react-native-firebase, you'll already have this added.
++ apply plugin: 'com.google.gms.google-services'
+```
+
+### :open_file_folder: **`google-services.json`**
+
+:warning:  If you've installed `react-native-firebase`, you should already have performed this step.
+
+Download your `google-services.json` from the *Firebase Console*.  Copy the file to your `android/app` folder.
 
 ## AndroidManifest.xml
 

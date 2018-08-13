@@ -5,13 +5,13 @@ react-native-background-geolocation-firebase &middot; [![npm](https://img.shield
 
 -------------------------------------------------------------------------------
 
-Firebase Proxy for React Native Background Geolocation
+Firebase Proxy for [React Native Background Geolocation](https://github.com/transistorsoft/react-native-background-geolocation).  The plugin will automatically post locations to your own Firebase database, overriding the `react-native-background-geolocation` plugin's SQLite / HTTP services.
+
+![](https://dl.dropboxusercontent.com/s/2ew8drywpvbdujz/firestore-locations.png?dl=1)
 
 ----------------------------------------------------------------------------
 
-The **[Android module](http://www.transistorsoft.com/shop/products/react-native-background-geolocation)** requires [purchasing a license](http://www.transistorsoft.com/shop/products/react-native-background-geolocation).  However, it *will* work for **DEBUG** builds.  It will **not** work with **RELEASE** builds [without purchasing a license](http://www.transistorsoft.com/shop/products/react-native-background-geolocation).
-
-(2018) This plugin is supported **full-time** and field-tested **daily** since 2013.
+The **[Android module](https://shop.transistorsoft.com/collections/frontpage/products/background-geolocation-firebase)** requires [purchasing a license](https://shop.transistorsoft.com/collections/frontpage/products/background-geolocation-firebase).  However, it *will* work for **DEBUG** builds.  It will **not** work with **RELEASE** builds [without purchasing a license](https://shop.transistorsoft.com/collections/frontpage/products/background-geolocation-firebase).
 
 ----------------------------------------------------------------------------
 
@@ -34,12 +34,9 @@ $ npm install git+https://git@github.com:transistorsoft/react-native-background-
 
 ### iOS
 - [`react-native link` Setup](docs/INSTALL-IOS-RNPM.md)
-- [Cocoapods](docs/INSTALL-IOS-COCOAPODS.md)
-- [Manual Setup](docs/INSTALL-IOS.md)
 
 ### Android
 * [`react-native link` Setup](docs/INSTALL-ANDROID-RNPM.md)
-* [Manual Setup](docs/INSTALL-ANDROID.md)
 
 ## :large_blue_diamond: Configure your license
 
@@ -104,18 +101,19 @@ export default class App extends Component {
 
 ```
 
-## Firebase Functions
+## :large_blue_diamond: Firebase Functions
 
-BackgroundGeolocation will post JSON to firebase using the default [Location Data Schema]().  
+`BackgroundGeolocation` will post its default "Location Data Schema" to your Firebase app.
 
 ```json
 {
-  "location":"<JSON>",
-  "params": "<JSON>"
+  "location":{},
+  "param1": "param 1",
+  "param2": "param 2"
 }
 ```
 
-You should implement your own [Firebase Functions]() to re-assemble the data in your collection as desired.  For example:
+You should implement your own [Firebase Functions]() to "*massage*" the incoming data in your collection as desired.  For example:
 
 ```typescript
 import * as functions from 'firebase-functions';
@@ -125,11 +123,9 @@ exports.createLocation = functions.firestore
   .onCreate((snap, context) => {
     const record = snap.data();
     
-    const location = JSON.parse(record.location);
-    const params = JSON.parse(record.params);
-  
-    console.log('[location] - ', location);
-    console.log('[params] - ', params);
+    const location = record.location;
+    
+    console.log('[data] - ', record);
     
     return snap.ref.set({
       uuid: location.uuid,
@@ -145,8 +141,7 @@ exports.createLocation = functions.firestore
       battery_level: location.battery.level,
       activity_type: location.activity.type,
       activity_confidence: location.activity.confidence,
-      extras: location.extras,
-      device: params.device
+      extras: location.extras
     });
 });
 
@@ -156,11 +151,9 @@ exports.createGeofence = functions.firestore
   .onCreate((snap, context) => {
     const record = snap.data();
     
-    const location = JSON.parse(record.location);
-    const params = JSON.parse(record.params);
+    const location = record.location;
   
-    console.log('[location] - ', location);
-    console.log('[params] - ', params);
+    console.log('[data] - ', record);
     
     return snap.ref.set({
       uuid: location.uuid,
@@ -170,8 +163,69 @@ exports.createGeofence = functions.firestore
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       extras: location.extras,
-      device: params.device
     });
+});
+
+```
+
+## :large_blue_diamond: Configuration Options
+
+#### `@param {String} locationsCollection [locations]`
+
+The collection name to post `location` events to.  Eg:
+
+```javascript
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/locations'
+});
+
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/locations'
+});
+
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/routes/456/locations'
+});
+
+```
+
+#### `@param {String} geofencesCollection [geofences]`
+
+The collection name to post `geofence` events to.  Eg:
+
+```javascript
+BackgroundGeolocationFirebase.configure({
+  geofencesCollection: '/geofences'
+});
+
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/geofences'
+});
+
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/routes/456/geofences'
+});
+
+```
+
+
+#### `@param {Boolean} updateSingleDocument [false]`
+
+If you prefer, you can instruct the plugin to update a *single document* in Firebase rather than creating a new document for *each* `location` / `geofence`.  In this case, you would presumably implement a *Firebase Function* to deal with updates upon this single document and store the location in some other collection as desired.  If this is your use-case, you'll also need to ensure you configure your `locationsCollection` / `geofencesCollection` accordingly with an even number of "parts", taking the form `/collection_name/document_id`, eg:
+
+```javascript
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/locations/latest'  // <-- 2 "parts":  even
+});
+
+// or
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/routes/456/the_location'  // <-- 4 "parts":  even
+});
+
+// Don't use an odd number of "parts"
+BackgroundGeolocationFirebase.configure({
+  locationsCollection: '/users/123/latest_location'  // <-- 3 "parts": odd!!  No!
 });
 
 ```
