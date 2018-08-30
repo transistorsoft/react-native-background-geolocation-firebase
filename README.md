@@ -96,7 +96,7 @@ export default class App extends Component {
     }, (state) => {
       console.log("- BackgroundGeolocation is configured and ready");
     });
-  }  
+  }
 }
 
 ```
@@ -113,7 +113,7 @@ export default class App extends Component {
 }
 ```
 
-You should implement your own [Firebase Functions]() to "*massage*" the incoming data in your collection as desired.  For example:
+You should implement your own [Firebase Functions](https://firebase.google.com/docs/functions) to "*massage*" the incoming data in your collection as desired.  For example:
 
 ```typescript
 import * as functions from 'firebase-functions';
@@ -122,11 +122,11 @@ exports.createLocation = functions.firestore
   .document('locations/{locationId}')
   .onCreate((snap, context) => {
     const record = snap.data();
-    
+
     const location = record.location;
-    
+
     console.log('[data] - ', record);
-    
+
     return snap.ref.set({
       uuid: location.uuid,
       timestamp: location.timestamp,
@@ -150,16 +150,16 @@ exports.createGeofence = functions.firestore
   .document('geofences/{geofenceId}')
   .onCreate((snap, context) => {
     const record = snap.data();
-    
+
     const location = record.location;
-  
+
     console.log('[data] - ', record);
-    
+
     return snap.ref.set({
       uuid: location.uuid,
       identifier: location.geofence.identifier,
       action: location.geofence.action,
-      timestamp: location.timestamp,      
+      timestamp: location.timestamp,
       latitude: location.coords.latitude,
       longitude: location.coords.longitude,
       extras: location.extras,
