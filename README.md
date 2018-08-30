@@ -113,7 +113,7 @@ export default class App extends Component {
 }
 ```
 
-You should implement your own [Firebase Functions](https://firebase.google.com/docs/functions" target="_blank) to "*massage*" the incoming data in your collection as desired.  For example:
+You should implement your own [Firebase Functions](https://firebase.google.com/docs/functions) to "*massage*" the incoming data in your collection as desired.  For example:
 
 ```typescript
 import * as functions from 'firebase-functions';
