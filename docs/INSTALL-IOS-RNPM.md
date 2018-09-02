@@ -69,7 +69,7 @@ From your **Firebase Console**, copy your downloaded `Google-Services-Info.plist
 
 ![](https://dl.dropboxusercontent.com/s/4s7kfa6quusqk7i/Google-Services.plist.png?dl=1)
 
-### **`Issues?`**
+### :x: **`Issues?`**
 
 ```shell
 Undefined symbols for architecture armv7: “_OBJC_CLASS_$_FIRApp”
