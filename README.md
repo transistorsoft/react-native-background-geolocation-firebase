@@ -199,11 +199,11 @@ BackgroundGeolocationFirebase.configure({
 });
 
 BackgroundGeolocationFirebase.configure({
-  locationsCollection: '/users/123/geofences'
+  geofencesCollection: '/users/123/geofences'
 });
 
 BackgroundGeolocationFirebase.configure({
-  locationsCollection: '/users/123/routes/456/geofences'
+  geofencesCollection: '/users/123/routes/456/geofences'
 });
 
 ```
