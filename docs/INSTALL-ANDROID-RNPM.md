@@ -16,7 +16,17 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:2.3.3'
 +        // NOTE:  If you've installed react-native-firebase, you should already have this included.
-+        classpath 'com.google.gms:google-services:4.0.1'        
++       classpath 'com.google.gms:google-services:4.0.1'
+    }
+    ext {
+        buildToolsVersion = "27.0.3"
+        minSdkVersion = 16
+        compileSdkVersion = 27
+        targetSdkVersion = 26
+        supportLibVersion = "27.1.1"
++       firebaseCoreVersion = "16.0.6"
++       firebaseFirestoreVersion = "17.1.5"
+
     }
 }
 allprojects {
@@ -27,43 +37,13 @@ allprojects {
             // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
             url "$rootDir/../node_modules/react-native/android"
         }
-        // Google now hosts their latest API dependencies on their own maven  server.  
+        // Google now hosts their latest API dependencies on their own maven  server.
         // React Native will eventually add this to their app template.
-+       maven {
-+           url 'https://maven.google.com'
-+       }
 +       maven {
 +           url "$rootDir/../node_modules/react-native-background-geolocation-firebase/android/libs"
 +       }
     }
 }
-
-/**
--* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
--* !!! THE FOLLOWING IS OPTIONAL BUT HIGHLY RECOMMENDED FOR YOUR SANITY !!!
--* !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-*
-* Do you hate Gradle conflicts where other plugin require some particular
-* version of play-services or define a compileSdkVersion, buildToolsVersion
-* which conflicts with that of your app?  Me too!
-*
-* If you define these key gradle configuration variables globally, the 
-* background-geolocation plugin (and any other "wise" plugins you've installed) 
-* can align themselves to YOUR desired versions!  You should define these variables 
-* as desired according to current values in your app/build.gradle
-*
-* You'll find that more and more plugins are beginning to wise up to checking 
-* for the presense of global gradle variables like this.
-*
-* BackgroundGeolocation is aware of the following variables:
-*/
-+ext {
-+    compileSdkVersion   = 26
-+    targetSdkVersion    = 26
-+    buildToolsVersion   = "26.0.2"
-+    supportLibVersion   = "26.1.0"
-+    googlePlayServicesVersion = "15.0.1" 
-+}
 ```
 
 ### :open_file_folder: **`android/app/build.gradle`**
