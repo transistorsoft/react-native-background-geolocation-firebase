@@ -61,6 +61,13 @@ RCT_EXPORT_METHOD(configure:(NSDictionary*)config success:(RCTResponseSenderBloc
     }
     if (!isRegistered) {
         isRegistered = YES;
+
+        // TODO make configurable.
+        FIRFirestore *db = [FIRFirestore firestore];
+        FIRFirestoreSettings *settings = [db settings];
+        settings.timestampsInSnapshotsEnabled = YES;
+        [db setSettings:settings];
+
         [[NSNotificationCenter defaultCenter] addObserver:self
             selector:@selector(onPersist:)
             name:PERSIST_EVENT
