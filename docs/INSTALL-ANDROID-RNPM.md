@@ -14,9 +14,9 @@ RNPM does a nice job, but we need to do a bit of manual setup.
 ```diff
 buildscript {
     dependencies {
-        classpath 'com.android.tools.build:gradle:2.3.3'
+        classpath 'com.android.tools.build:gradle:3.1.4'
 +        // NOTE:  If you've installed react-native-firebase, you should already have this included.
-+       classpath 'com.google.gms:google-services:4.0.1'
++       classpath 'com.google.gms:google-services:4.2.0'
     }
     ext {
         buildToolsVersion = "27.0.3"
