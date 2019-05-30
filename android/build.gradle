@@ -1,18 +1,22 @@
 apply plugin: 'com.android.library'
 
-def DEFAULT_COMPILE_SDK_VERSION     = 27
-def DEFAULT_BUILD_TOOLS_VERSION     = "27.1.1"
-def DEFAULT_TARGET_SDK_VERSION      = 27
+def DEFAULT_COMPILE_SDK_VERSION     = 28
+def DEFAULT_BUILD_TOOLS_VERSION     = "28.0.3"
+def DEFAULT_TARGET_SDK_VERSION      = 28
 
-def DEFAULT_FIREBASE_CORE_VERSION    = "16.0.1"
-def DEFAULT_FIREBASE_FIRESTORE_VERSION = "17.0.4"
+def DEFAULT_FIREBASE_CORE_VERSION    = "16.0.9"
+def DEFAULT_FIREBASE_FIRESTORE_VERSION = "19.0.0"
+
+def safeExtGet(prop, fallback) {
+    rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
+}
 
 android {
-    compileSdkVersion rootProject.hasProperty('compileSdkVersion') ? rootProject.compileSdkVersion : DEFAULT_COMPILE_SDK_VERSION
-    buildToolsVersion rootProject.hasProperty('buildToolsVersion') ? rootProject.buildToolsVersion : DEFAULT_BUILD_TOOLS_VERSION
+    compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
+    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
 
     defaultConfig {
-        targetSdkVersion rootProject.hasProperty('targetSdkVersion') ? rootProject.targetSdkVersion : DEFAULT_TARGET_SDK_VERSION
+        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
         versionCode 1
         versionName "1.0"
     }
@@ -46,12 +50,8 @@ rootProject.gradle.buildFinished { buildResult ->
 }
 
 repositories{
-    jcenter()
     maven {
         url './libs'
-    }
-    maven {
-        url 'https://maven.google.com'
     }
 }
 
@@ -59,12 +59,12 @@ dependencies {
     def firebaseCoreVersion = rootProject.hasProperty('firebaseCoreVersion') ? rootProject.firebaseCoreVersion : DEFAULT_FIREBASE_CORE_VERSION
     def firebaseFirestoreVersion = rootProject.hasProperty('firebaseFirestoreVersion') ? rootProject.firebaseFirestoreVersion : DEFAULT_FIREBASE_FIRESTORE_VERSION
 
-    compile 'com.facebook.react:react-native:+'
-    compile 'org.greenrobot:eventbus:3.0.0'
-    compile "com.google.firebase:firebase-core:$firebaseCoreVersion"
-    compile "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
-    compile(group: 'com.transistorsoft', name:'tslocationmanager', version: '+')
-    compile(group: 'com.transistorsoft', name:'tsfirebaseproxy', version: '+')
-    compile 'org.slf4j:slf4j-api:1.7.25'
-    compile 'com.github.tony19:logback-android:1.3.0-2'
+    implementation 'com.facebook.react:react-native:+'
+    implementation 'org.greenrobot:eventbus:3.0.0'
+    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
+    implementation "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
+    implementation(group: 'com.transistorsoft', name:'tslocationmanager', version: '+')
+    implementation(group: 'com.transistorsoft', name:'tsfirebaseproxy', version: '+')
+    implementation 'org.slf4j:slf4j-api:1.7.25'
+    implementation 'com.github.tony19:logback-android:1.3.0-2'
 }
