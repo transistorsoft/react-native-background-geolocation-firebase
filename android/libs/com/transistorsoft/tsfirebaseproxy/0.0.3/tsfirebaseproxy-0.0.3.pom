@@ -4,6 +4,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.transistorsoft</groupId>
   <artifactId>tsfirebaseproxy</artifactId>
-  <version>0.0.2</version>
+  <version>0.0.3</version>
   <packaging>aar</packaging>
 </project>
