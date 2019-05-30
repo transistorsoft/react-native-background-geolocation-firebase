@@ -11,6 +11,7 @@ RNPM does a nice job, but we need to do a bit of manual setup.
 
 ### :open_file_folder: **`android/build.gradle`**
 
+
 ```diff
 buildscript {
     dependencies {
@@ -19,13 +20,13 @@ buildscript {
 +       classpath 'com.google.gms:google-services:4.2.0'
     }
     ext {
-        buildToolsVersion = "27.0.3"
+        buildToolsVersion = "28.0.3"
         minSdkVersion = 16
-        compileSdkVersion = 27
-        targetSdkVersion = 26
-        supportLibVersion = "27.1.1"
-+       firebaseCoreVersion = "16.0.6"
-+       firebaseFirestoreVersion = "17.1.5"
+        compileSdkVersion = 28
+        targetSdkVersion = 28
+        supportLibVersion = "28.0.0"
++       firebaseCoreVersion = "16.0.9"
++       firebaseFirestoreVersion = "19.0.0"
 
     }
 }
