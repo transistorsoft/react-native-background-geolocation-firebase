@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## [0.3.0] -- 2019-08-18
+- [Changed] Updated for `react-native >= 0.60.0`
+
+-------------------------------------------------------------
+
+:warning: If you have a previous version of **`react-native-background-geolocation-firebase < 0.3.0`** installed into **`react-native >= 0.60`**, you should first `unlink` your previous version as `react-native link` is no longer required.
+
+```bash
+$ react-native unlink react-native-background-geolocation-firebase
+```
+
+-------------------------------------------------------------
+
 ## [0.2.0] -- 2019-05-30
 - [Fixed] Android bug in using `geofencesCollection`.
 - [Fixed] Update Android Gradle config to use `implementation` instead of `compile`.

@@ -21,8 +21,4 @@ Pod::Spec.new do |s|
   s.dependency 'Firebase/Firestore'
 
   s.source_files        = 'ios/RNBackgroundGeolocationFirebase/*.{h,m}'
-
-  
-
-
 end
