@@ -1,15 +1,20 @@
-# Android Installation with `react-native link`
+# Android Auto-linking Installation
 
-### `react-native < 0.60`
+### `react-native >= 0.60`
+
+### With `yarn`
+
+```shell
+$ yarn add react-native-background-geolocation-firebase
+```
+
+### With `npm`
 
 ```shell
 $ npm install --save react-native-background-geolocation-firebase
-$ react-native link react-native-background-geolocation-firebase
 ```
 
 ## Gradle Configuration
-
-RNPM does a nice job, but we need to do a bit of manual setup.
 
 ### :open_file_folder: **`android/build.gradle`**
 
@@ -19,7 +24,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
 +        // NOTE:  If you've installed react-native-firebase, you should already have this included.
-+       classpath 'com.google.gms:google-services:4.2.0'
++       classpath 'com.google.gms:google-services:4.3.0'
     }
     ext {
         buildToolsVersion = "28.0.3"
@@ -27,24 +32,11 @@ buildscript {
         compileSdkVersion = 28
         targetSdkVersion = 28
         supportLibVersion = "28.0.0"
-+       firebaseCoreVersion = "16.0.9"
-+       firebaseFirestoreVersion = "19.0.0"
+        appCompatVersion = "1.0.2"
+        googlePlayServicesLocationVersion = "17.0.0"
++       firebaseCoreVersion = "17.1.0"
++       firebaseFirestoreVersion = "21.0.0"
 
-    }
-}
-allprojects {
-    repositories {
-        mavenLocal()
-        jcenter()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url "$rootDir/../node_modules/react-native/android"
-        }
-        // Google now hosts their latest API dependencies on their own maven  server.
-        // React Native will eventually add this to their app template.
-+       maven {
-+           url "$rootDir/../node_modules/react-native-background-geolocation-firebase/android/libs"
-+       }
     }
 }
 ```
@@ -102,3 +94,4 @@ Download your `google-services.json` from the *Firebase Console*.  Copy the file
 ```
 
 :information_source: [Purchase a License](http://www.transistorsoft.com/shop/products/react-native-background-geolocation)
+

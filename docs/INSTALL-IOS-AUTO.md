@@ -1,21 +1,27 @@
-# iOS Installation with `react-native link`
+# iOS Auto-linking Instructions
 
-### `react-native < 0.60`
+### `react-native >= 0.60`
 
-**Note:** `react-native-background-geolocation-firebase` requires Cocoapods.  If you haven't yet configured your project for Cocaopods, first initialize your `Podfile`:
+### With `yarn`
 
 ```shell
-$ cd ios
-$ pod init
+$ yarn add react-native-background-geolocation-firebase
 ```
+
+### With `npm`
 
 ```shell
 $ npm install --save react-native-background-geolocation-firebase
-$ react-native link react-native-background-geolocation-firebase
 ```
 
 To open your project in XCode, use the file `YourProject.xcworkspace` (**not** `YourProject.xcodeproj`)
 
+### `pod install`
+
+```bash
+$ cd ios
+$ pod install
+```
 
 ### :open_file_folder: **`AppDelegate.m`**
 
@@ -51,16 +57,6 @@ To open your project in XCode, use the file `YourProject.xcworkspace` (**not** `
   return YES;
 }
 
-```
-
-### **`Run pod install`**
-
-:warning: **NOTE:**  If you've already installed `react-native-firebase`, this step will already have been performed.
-
-After adding import to `AppDelegate.m` you need to install the new pod settings:
-```shell
-cd ios
-pod install
 ```
 
 ### **`Google-Services-Info.plist`**

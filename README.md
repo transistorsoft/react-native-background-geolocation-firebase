@@ -17,6 +17,22 @@ The **[Android module](https://shop.transistorsoft.com/collections/frontpage/pro
 
 ## :large_blue_diamond: Installing the Plugin
 
+-------------------------------------------------------------
+
+:warning: If you have a previous version of **`react-native-background-geolocation-firebase < 0.3.0`** installed into **`react-native >= 0.60`**, you should first `unlink` your previous version as `react-native link` is no longer required.
+
+```bash
+$ react-native unlink react-native-background-geolocation-firebase
+```
+
+-------------------------------------------------------------
+
+### From yarn
+
+```bash
+$ yarn add react-native-background-geolocation-firebase
+```
+
 ### From npm
 
 ```
@@ -27,15 +43,26 @@ $ npm install react-native-background-geolocation-firebase --save
 
 ```
 $ npm install git+https://git@github.com:transistorsoft/react-native-background-geolocation-firebase.git --save
-
 ```
 
 ## :large_blue_diamond: Setup Guides
 
-### iOS
+## iOS
+
+### `react-native >= 0.60`
+- [Auto-linking Setup](docs/INSTALL-IOS-AUTO.md)
+
+### `react-native < 0.60`
 - [`react-native link` Setup](docs/INSTALL-IOS-RNPM.md)
 
-### Android
+## Android
+
+### `react-native >= 0.60`
+
+- [Auto-linking Setup](docs/INSTALL-ANDROID-AUTO.md)
+
+### `react-native < 0.60`
+
 * [`react-native link` Setup](docs/INSTALL-ANDROID-RNPM.md)
 
 ## :large_blue_diamond: Configure your license
@@ -135,7 +162,7 @@ exports.createLocation = functions.firestore
       longitude: location.coords.longitude,
       speed: location.coords.speed,
       heading: location.coords.heading,
-      altitude: location.coords.altitude,      
+      altitude: location.coords.altitude,
       event: location.event,
       battery_is_charging: location.battery.is_charging,
       battery_level: location.battery.level,
