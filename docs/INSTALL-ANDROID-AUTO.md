@@ -24,7 +24,7 @@ buildscript {
     dependencies {
         classpath 'com.android.tools.build:gradle:3.1.4'
 +        // NOTE:  If you've installed react-native-firebase, you should already have this included.
-+       classpath 'com.google.gms:google-services:4.3.0'
++       classpath 'com.google.gms:google-services:4.3.3'    // Or higher.
     }
     ext {
         buildToolsVersion = "28.0.3"
@@ -34,8 +34,27 @@ buildscript {
         supportLibVersion = "28.0.0"
         appCompatVersion = "1.0.2"
         googlePlayServicesLocationVersion = "17.0.0"
-+       firebaseCoreVersion = "17.1.0"
-+       firebaseFirestoreVersion = "21.0.0"
++       firebaseCoreVersion = "17.4.4"                  // Or higher.
++       firebaseFirestoreVersion = "21.5.0"             // Or higher.
+
+    }
+}
+
+allprojects {
+    repositories {
+        mavenLocal()
+        maven {
+            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
+            url("$rootDir/../node_modules/react-native/android")
+        }
+        maven {
+            // Android JSC is installed from npm
+            url("$rootDir/../node_modules/jsc-android/dist")
+        }
++       maven {
++           // Required react-native-background-geolocation-firebase
++           url("${project(':react-native-background-geolocation-firebase').projectDir}/libs")
++       }
 
     }
 }

@@ -1,5 +1,21 @@
 # CHANGELOG
 
+## [0.4.0] -- 2020-06-19
+* [Fixed][Android] `com.android.tools.build:gradle:4.0.0` no longer allows "*direct local aar dependencies*".  The Android Setup now requires a custom __`maven url`__ to be added to your app's root __`android/build.gradle`__:
+
+```diff
+allprojects {
+    repositories {
+        google()
+        jcenter()
++       maven {
++           // [required] background-geolocation Firebase adapter.
++           url "${project(':react-native-background-geolocation-firebase').projectDir}/libs"
++       }
+    }
+}
+```
+
 ## [0.3.0] -- 2019-08-18
 - [Changed] Updated for `react-native >= 0.60.0`
 
