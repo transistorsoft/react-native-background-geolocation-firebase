@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## [0.4.1] -- 2023-10-06
+* [iOS] Remove `settings.timestampsInSnapshotsEnabled = YES;`
+* [Android] Update default `firebaseCoreVersion`, `firebaseCoreVersion`
+
 ## [0.4.0] -- 2020-06-19
 * [Fixed][Android] `com.android.tools.build:gradle:4.0.0` no longer allows "*direct local aar dependencies*".  The Android Setup now requires a custom __`maven url`__ to be added to your app's root __`android/build.gradle`__:
 
