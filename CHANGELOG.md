@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## [0.5.0] -- 2024-10-17
+* Upgrade iOS / Android dependencies.  Modify Setup Instructions.
+
 ## [0.4.1] -- 2023-10-06
 * [iOS] Remove `settings.timestampsInSnapshotsEnabled = YES;`
 * [Android] Update default `firebaseCoreVersion`, `firebaseCoreVersion`

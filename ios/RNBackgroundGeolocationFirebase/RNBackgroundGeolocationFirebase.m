@@ -10,7 +10,7 @@
 
 #import <React/RCTEventDispatcher.h>
 
-#import "Firebase.h"
+#import <FirebaseFirestore/FirebaseFirestore.h>
 
 static NSString *const PERSIST_EVENT                = @"TSLocationManager:PersistEvent";
 

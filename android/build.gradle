@@ -1,25 +1,26 @@
 apply plugin: 'com.android.library'
 
-def DEFAULT_COMPILE_SDK_VERSION     = 28
+def DEFAULT_COMPILE_SDK_VERSION     = 34
 def DEFAULT_BUILD_TOOLS_VERSION     = "28.0.3"
 def DEFAULT_TARGET_SDK_VERSION      = 28
 
-def DEFAULT_FIREBASE_CORE_VERSION    = "21.1.1"
-def DEFAULT_FIREBASE_FIRESTORE_VERSION = "24.8.1"
+def DEFAULT_FIREBASE_SDK_VERSION    = "33.4.0"
 
 def safeExtGet(prop, fallback) {
     rootProject.ext.has(prop) ? rootProject.ext.get(prop) : fallback
 }
 
 android {
+    if (project.android.hasProperty("namespace")) {
+        namespace("com.transistorsoft.rnbackgroundgeolocation.firebase")
+    }
     compileSdkVersion safeExtGet('compileSdkVersion', DEFAULT_COMPILE_SDK_VERSION)
-    buildToolsVersion safeExtGet('buildToolsVersion', DEFAULT_BUILD_TOOLS_VERSION)
-
-    defaultConfig {
-        targetSdkVersion safeExtGet('targetSdkVersion', DEFAULT_TARGET_SDK_VERSION)
-        minSdkVersion safeExtGet('minSdkVersion', 16)
-        versionCode 1
-        versionName "1.0"
+    
+    defaultConfig {        
+        minSdkVersion safeExtGet('minSdkVersion', 16)        
+    }
+    lintOptions {
+        disable 'InvalidPackage'
     }
 }
 
@@ -57,13 +58,14 @@ repositories{
 }
 
 dependencies {
-    def firebaseCoreVersion = safeExtGet("firebaseCoreVersion", DEFAULT_FIREBASE_CORE_VERSION)
-    def firebaseFirestoreVersion = safeExtGet('firebaseFirestoreVersion', DEFAULT_FIREBASE_FIRESTORE_VERSION)
-
+    def FirebaseSDKVersion = safeExtGet("FirebaseSDKVersion", DEFAULT_FIREBASE_SDK_VERSION);
+    
     implementation "com.facebook.react:react-native:${safeExtGet('reactNativeVersion', '+')}"
+
+    // Import the Firebase BoM
+    implementation(platform("com.google.firebase:firebase-bom:$FirebaseSDKVersion"))
+    implementation "com.google.firebase:firebase-firestore"
+
     // tsfirebaseproxy.aar
     api(group: 'com.transistorsoft', name:"tsfirebaseproxy", version: '+')
-
-    implementation "com.google.firebase:firebase-core:$firebaseCoreVersion"
-    implementation "com.google.firebase:firebase-firestore:$firebaseFirestoreVersion"
 }
