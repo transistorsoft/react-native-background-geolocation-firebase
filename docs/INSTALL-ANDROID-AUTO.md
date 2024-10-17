@@ -1,7 +1,5 @@
 # Android Auto-linking Installation
 
-### `react-native >= 0.60`
-
 ### With `yarn`
 
 ```shell
@@ -51,6 +49,7 @@ allprojects {
 ### :open_file_folder: **`android/settings.gradle`**
 - Add the `google-services` plugin (if you haven't already):
 - Add the following `repositories` to the `pluginManagement` block.
+<<<<<<< HEAD
 
 ```gradle
 pluginManagement { 
@@ -75,6 +74,32 @@ plugins {
 plugins {   // <-- Add plugins block if you don't have one.
 +   id "com.google.gms.google-services"
 }
+=======
+
+```diff
+pluginManagement { 
+    includeBuild("../node_modules/@react-native/gradle-plugin")
++   repositories {
++       google()
++       mavenCentral()
++   }
+}
+
+plugins { 
+    id("com.facebook.react.settings") 
++   id 'com.google.gms.google-services' version '4.3.15' apply false    // Or any desired version.
+}
+```
+
+### :open_file_folder: **`android/app/build.gradle`**
+- If you don't see a __`plugins`__ block, add it to the __top of the file__.
+- Add the `google-services` plugin (if you haven't already):
+
+```diff
+plugins {   // <-- Add plugins block if you don't have one.
++   id "com.google.gms.google-services"
+}
+>>>>>>> update-dependencies
 ```
 
 ### :open_file_folder: **`google-services.json`**
