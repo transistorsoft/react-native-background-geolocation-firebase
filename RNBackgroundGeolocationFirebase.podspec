@@ -15,11 +15,10 @@ Pod::Spec.new do |s|
   s.author              = package['author']
   s.source              = { :git => 'https://github.com/transistorsoft/react-native-background-geolocation-firebase.git', :tag => s.version }
   s.platform            = :ios, '8.0'
-
-  s.dependency 'React'
   s.preserve_paths      = 'docs', 'CHANGELOG.md', 'LICENSE', 'package.json', 'index.js', 'NativeModule.js'
-  s.dependency 'Firebase/Core'
-  s.dependency 'Firebase/Firestore'
+  
+  s.dependency 'React'  
+  s.dependency 'FirebaseFirestore'
 
   s.source_files        = 'ios/RNBackgroundGeolocationFirebase/*.{h,m}'
 end

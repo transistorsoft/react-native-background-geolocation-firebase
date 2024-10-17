@@ -49,21 +49,11 @@ $ npm install git+https://git@github.com:transistorsoft/react-native-background-
 
 ## iOS
 
-### `react-native >= 0.60`
 - [Auto-linking Setup](docs/INSTALL-IOS-AUTO.md)
-
-### `react-native < 0.60`
-- [`react-native link` Setup](docs/INSTALL-IOS-RNPM.md)
 
 ## Android
 
-### `react-native >= 0.60`
-
 - [Auto-linking Setup](docs/INSTALL-ANDROID-AUTO.md)
-
-### `react-native < 0.60`
-
-* [`react-native link` Setup](docs/INSTALL-ANDROID-RNPM.md)
 
 ## :large_blue_diamond: Configure your license
 
@@ -103,27 +93,39 @@ import BackgroundGeolocationFirebase from "react-native-background-geolocation-f
 
 ```javascript
 
+import BackgroundGeolocation from "react-native-background-geolocation";
 import BackgroundGeolocationFirebase from "react-native-background-geolocation-firebase";
-
-export default class App extends Component {
-  componentWillMount() {
-    ////
-    // 1. configure BackgroundGeolocationFirebase
-    //
+.
+.
+.
+function App(): React.JSX.Element {
+  
+  React.useEffect(() => {
+    // Configure BackgroundGeolocation Firebase adapter.
     BackgroundGeolocationFirebase.configure({
       locationsCollection: "locations",
       geofencesCollection: "geofences"
     });
 
-    ////
-    // 2.  Configure BackgroundGeolocation as usual.
-    //
-    BackgroundGeolocation.ready({
-      ...
-    }, (state) => {
-      console.log("- BackgroundGeolocation is configured and ready");
+    // Configure BackgroundGeolocation
+    const onLocation = BackgroundGeolocation.onLocation((location) => {
+      console.log('[onLocation] ', location);
     });
-  }
+
+    BackgroundGeolocation.ready({
+      debug: true,
+      logLevel: BackgroundGeolocation.LOG_LEVEL_VERBOSE
+    }).then((state) => {
+      console.log('- ready: ', state.enablede);
+      if (!state.enabled) {
+        BackgroundGeolocation.start();
+      }
+    })
+    return () => {
+      // Remove event-listeners.
+      onLocation.remove();
+    }
+  });
 }
 
 ```

@@ -1,7 +1,5 @@
 # Android Auto-linking Installation
 
-### `react-native >= 0.60`
-
 ### With `yarn`
 
 ```shell
@@ -18,72 +16,69 @@ $ npm install --save react-native-background-geolocation-firebase
 
 ### :open_file_folder: **`android/build.gradle`**
 
-
 ```diff
-buildscript {
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.4'
-+        // NOTE:  If you've installed react-native-firebase, you should already have this included.
-+       classpath 'com.google.gms:google-services:4.3.3'    // Or higher.
-    }
-    ext {
-        buildToolsVersion = "28.0.3"
+buildscript {    
+    ext {        
         minSdkVersion = 16
-        compileSdkVersion = 28
-        targetSdkVersion = 28
-        supportLibVersion = "28.0.0"
-        appCompatVersion = "1.0.2"
-        googlePlayServicesLocationVersion = "17.0.0"
-+       firebaseCoreVersion = "17.4.4"                  // Or higher.
-+       firebaseFirestoreVersion = "21.5.0"             // Or higher.
+        compileSdkVersion = 34
+        targetSdkVersion = 34
+        googlePlayServicesLocationVersion = "21.3.0"
++       FirebaseSDKVersion  = "33.4.0"          // or as desired.
 
     }
 }
 
 allprojects {
     repositories {
-        mavenLocal()
-        maven {
-            // All of React Native (JS, Obj-C sources, Android binaries) is installed from npm
-            url("$rootDir/../node_modules/react-native/android")
-        }
-        maven {
-            // Android JSC is installed from npm
-            url("$rootDir/../node_modules/jsc-android/dist")
-        }
-+       maven {
-+           // Required react-native-background-geolocation-firebase
-+           url("${project(':react-native-background-geolocation-firebase').projectDir}/libs")
-+       }
+        // Required for react-native-background-geolocation
+        maven { url("${project(':react-native-background-geolocation').projectDir}/libs") }
+        maven { url 'https://developer.huawei.com/repo/' }
+        // Required for react-native-background-fetch
+        maven { url("${project(':react-native-background-fetch').projectDir}/libs") }
 
++       // Required react-native-background-geolocation-firebase
++       maven { url("${project(':react-native-background-geolocation-firebase').projectDir}/libs") }
     }
 }
 ```
 
-### :open_file_folder: **`android/app/build.gradle`**
+> [!NOTE]  
+> the param __`ext.FirebaseSdkVersion`__ controls the imported version of the *Firebase SDK* (`com.google.firebase:firebase-bom`).  Consult the [Firebase Release Notes](https://firebase.google.com/support/release-notes/android?_gl=1*viqpog*_up*MQ..*_ga*MTE1NjI2MDkuMTcyOTA4ODY0MQ..*_ga_CW55HF8NVT*MTcyOTA4ODY0MS4xLjAuMTcyOTA4ODY0MS4wLjAuMA..#latest_sdk_versions) to determine the latest version of the *Firebase* SDK
+
+
+### :open_file_folder: **`android/settings.gradle`**
+- Add the `google-services` plugin (if you haven't already):
+- Add the following `repositories` to the `pluginManagement` block.
 
 ```diff
-
-dependencies {
-    .
-    .
-    .
+pluginManagement { 
+    includeBuild("../node_modules/@react-native/gradle-plugin")
++   repositories {
++       google()
++       mavenCentral()
++   }
 }
 
-// Run this once to be able to run the application with BUCK
-// puts all compile dependencies into folder libs for BUCK to use
-task copyDownloadableDepsToLibs(type: Copy) {
-    from configurations.compile
-    into 'libs'
+plugins { 
+    id("com.facebook.react.settings") 
++   id 'com.google.gms.google-services' version '4.3.15' apply false    // Or any desired version.
 }
+```
 
-+ // NOTE:  If you've installed react-native-firebase, you'll already have this added.
-+ apply plugin: 'com.google.gms.google-services'
+### :open_file_folder: **`android/app/build.gradle`**
+- If you don't see a __`plugins`__ block, add it to the __top of the file__.
+- Add the `google-services` plugin (if you haven't already):
+
+```diff
+plugins {   // <-- Add plugins block if you don't have one.
++   id "com.google.gms.google-services"
+}
 ```
 
 ### :open_file_folder: **`google-services.json`**
 
-:warning:  If you've installed `react-native-firebase`, you should already have performed this step.
+> [!NOTE]  
+> If you've installed `react-native-firebase`, you should already have performed this step.
 
 Download your `google-services.json` from the *Firebase Console*.  Copy the file to your `android/app` folder.
 
